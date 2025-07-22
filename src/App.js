@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import LoadingScreen from './components/LoadingScreen';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import ClientsSection from './components/ClientsSection';
+import LatestJobsSection from './components/LatestJobsSection';
+import Footer from './components/Footer';
 
 function App() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 2500); // Adjust duration as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!loaded) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+
+      {/* Hero section */}
+      <div className="mt-20">
+        <Hero />
+      </div>
+
+      {/* Clients section */}
+      <ClientsSection />
+      <LatestJobsSection />
+      <Footer />
     </div>
   );
 }
